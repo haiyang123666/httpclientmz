@@ -7,6 +7,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -22,7 +25,17 @@ public class HttpClientUtils {
 
     public static void main(String[] args) {
         HttpClientUtils h = new HttpClientUtils();
-        h.httpClientIPAndPort();
+        // h.httpClientIPAndPort();
+        h.tes001();
+
+    }
+
+    /*
+    测试
+     */
+     void tes001(){
+        Document dov = httpClientIPAndPort();
+        int asd = ipAndport(dov);
 
     }
 
@@ -30,10 +43,10 @@ public class HttpClientUtils {
     本机ip去爬取代理网站的ip
 
      */
-    String httpClientIPAndPort (){
+    Document httpClientIPAndPort (){
         String httpipAndPort=null;
         String url  = "https://www.kuaidaili.com/free/";
-        String htmldoc = null;
+        Document htmldoc = null;
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet =new HttpGet(url);
         try {
@@ -58,18 +71,32 @@ public class HttpClientUtils {
                     int state = response.getStatusLine().getStatusCode();
                     System.out.println("响应状态:"+state);
                     if (state == 200){
-                        htmldoc = result;
+                        Document doc = Jsoup.parse(result);
+                        htmldoc = doc;
+                  //      System.out.println("documents:"+doc);
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         return htmldoc;
     }
 
+    int ipAndport(Document document){
+        int ips=0,ports=0;
+        Elements elements = null;
+        try {
+                elements = document.select("body").select("div[class^=body]").select("div[id^=content]")
+                        .select("div[class^=con-body]").select("div").select("div[id^=list]")
+                        .select("tbody").select("tr");
+            System.out.println("d:"+elements);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ips+ports;
+    }
 
 }
