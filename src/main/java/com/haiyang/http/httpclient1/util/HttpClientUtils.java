@@ -9,6 +9,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -92,7 +93,10 @@ public class HttpClientUtils {
                 elements = document.select("body").select("div[class^=body]").select("div[id^=content]")
                         .select("div[class^=con-body]").select("div").select("div[id^=list]")
                         .select("tbody").select("tr");
-            System.out.println("d:"+elements);
+            for (Element element:elements){
+                String iips = elements.select("td[data-title^=IP]").text();
+                String poorts1 = elements.select("td[data-title^=]").text();
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
