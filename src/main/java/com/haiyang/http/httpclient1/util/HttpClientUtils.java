@@ -15,6 +15,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author shkstart
@@ -36,8 +38,7 @@ public class HttpClientUtils {
      */
      void tes001(){
         Document dov = httpClientIPAndPort();
-        int asd = ipAndport(dov);
-
+        List<String> lio = ipAndport(dov);
     }
 
     /*
@@ -74,7 +75,6 @@ public class HttpClientUtils {
                     if (state == 200){
                         Document doc = Jsoup.parse(result);
                         htmldoc = doc;
-                  //      System.out.println("documents:"+doc);
                     }
                 }
             } catch (IOException e) {
@@ -86,33 +86,33 @@ public class HttpClientUtils {
         return htmldoc;
     }
 
-    int ipAndport(Document document){
-        int ips=0,ports=0;
+    List<String> ipAndport(Document document){
+        int ports=0;
+        String ips = null;
         Elements elements = null;
-        Elements iips = null;
-        Elements poorts1 = null;
+        List<String> lists = new ArrayList<>();
         try {
                 elements = document.select("body").select("div[class^=body]").select("div[id^=content]")
                         .select("div[class^=con-body]").select("div").select("div[id^=list]")
                         .select("tbody").select("tr");
-            iips = elements.select("td[data-title^=IP]");
-            poorts1 = elements.select("td[data-title^=]");
             for (Element element:elements){
-              //  System.out.println("e:"+element);
-                System.out.println("ip:"+element.text());
-
-
-
-              /*
-                System.out.println("iips:"+iips);
-                System.out.println("poorts1:"+poorts1);
-
-                    */
+                Elements ip = element.select("td[data-title^=IP]");
+                Elements port  = element.select("td[data-title^=PORT]");
+                Elements nmd   = element.select("td[data-title^=匿名度]");
+                Elements lx    = element.select("td[data-title^=类型]");
+                Elements wz    = element.select("td[data-title^=位置]");
+                Elements yxsd  = element.select("td[data-title^=响应速度]");
+                Elements pyasj = element.select("td[data-title^=最后验证时间]");
+                String ipss = ip.text();
+                String op = port.text();
+                String ipport = ipss+":"+op;
+                ports = Integer.parseInt(op);
+                lists.add(ipport);
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return ips+ports;
+        return lists;
     }
 
 }
