@@ -89,13 +89,25 @@ public class HttpClientUtils {
     int ipAndport(Document document){
         int ips=0,ports=0;
         Elements elements = null;
+        Elements iips = null;
+        Elements poorts1 = null;
         try {
                 elements = document.select("body").select("div[class^=body]").select("div[id^=content]")
                         .select("div[class^=con-body]").select("div").select("div[id^=list]")
                         .select("tbody").select("tr");
+            iips = elements.select("td[data-title^=IP]");
+            poorts1 = elements.select("td[data-title^=]");
             for (Element element:elements){
-                String iips = elements.select("td[data-title^=IP]").text();
-                String poorts1 = elements.select("td[data-title^=]").text();
+              //  System.out.println("e:"+element);
+                System.out.println("ip:"+element.text());
+
+
+
+              /*
+                System.out.println("iips:"+iips);
+                System.out.println("poorts1:"+poorts1);
+
+                    */
             }
         }catch (Exception e){
             e.printStackTrace();
