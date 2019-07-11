@@ -26,26 +26,22 @@ import java.util.List;
  */
 public class HttpClientUtils {
 
-    public static void main(String[] args) {
-        HttpClientUtils h = new HttpClientUtils();
-        // h.httpClientIPAndPort();
-        h.tes001();
 
-    }
 
     /*
     测试
      */
-     void tes001(){
+     String tes001(){
         Document dov = httpClientIPAndPort();
         List<String> lio = ipAndport(dov);
+        return null;
     }
 
     /*
     本机ip去爬取代理网站的ip
 
      */
-    Document httpClientIPAndPort (){
+ Document httpClientIPAndPort (){
         String httpipAndPort=null;
         String url  = "https://www.kuaidaili.com/free/";
         Document htmldoc = null;
@@ -86,7 +82,7 @@ public class HttpClientUtils {
         return htmldoc;
     }
 
-    List<String> ipAndport(Document document){
+  List<String> ipAndport(Document document){
         int ports=0;
         String ips = null;
         Elements elements = null;
